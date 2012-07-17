@@ -1,0 +1,116 @@
+@media all {
+    body {
+        font-family: "Constantia", "Times", "Georgia", serif;
+        font-size: 11pt;
+        text-align: center;
+        margin: 0px;
+        background-color: #f3f3f3;
+    }
+
+    #content {
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    .documentation {
+        float: left;
+        line-height: 1.4em;
+    }
+
+    .documentation h1, .documentation h2 {
+        font-weight: normal;
+        line-height: 1.4em;
+        font-kerning: normal;
+    }
+
+    .documentation h1 {
+        font-size: 2.5em;
+    }
+
+    .documentation h2 {
+        font-weight: normal;
+        line-height: 1.4em;
+    }
+
+    .documentation h3 {
+        font-weight: normal;
+        font-style: italic;
+        line-height: 1.2em;
+    }
+
+    .documentation h4 {
+        font-weight: normal;
+        font-size: 1.1em;
+        line-height: 1.2em;
+        font-style: italic;
+    }
+
+    .documentation p {
+        margin-top: 0em;
+        margin-left: 1em;
+        font-stretch: expanded;
+    }
+
+    .documentation pre {
+        font-family: "Droid Sans Mono", "Courier New", monospace;
+        font-size: 10pt;
+        line-height: 1.4em;
+        padding-left: 2em;
+    }
+
+    .code {
+        float: left;
+        font-family: "Droid Sans Mono", "Courier New", monospace;
+        white-space: pre;
+        font-size: 10pt;
+        background-color: #ececec;
+        margin: 0;
+    }
+
+    .divider {
+        clear: both;
+        height: 0;
+        line-height: 0;
+    }
+
+    .intra-wiki {
+        color: black;
+        text-decoration: none;
+        border-bottom: solid 1px gray;
+    }
+
+    .highlight {
+        background-color: yellow;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+
+    pre.prettyprint {
+        border: 0px none;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    pre.prettyprint {
+        border-left: 1px solid #acacac;
+    }
+}
+
+@media print, screen and (max-width: 700px) {
+    pre.prettyprint {
+        padding: 1em 0em 0em 1em !important;
+        background-color: #f3f3f3;
+    }
+}
+
+@media print {
+    body {
+        background-color: transparent;
+    }
+    pre.prettyprint {
+        background-color: transparent;
+    }
+}
