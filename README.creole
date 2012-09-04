@@ -16,7 +16,7 @@ with the documentation on the left and the code being documented
 
 Documentation is written using the [[http://wikicreole.org/|WikiCreole]] markup.
 
-{{screenshot.png|An example of documentation}}.
+{{http://abstract-open-solutions.github.com/code-illuminated/screenshot.png|An example of documentation}}.
 
 This library is recommended for writing
 //mid-level// or //low-level// documentation
@@ -131,8 +131,71 @@ And these //Javascripts// at the bottom:
 We now only have to serve {{{index.html}}} via //HTTP//
 and visit it with our browser.
 
+//Code Illuminated// itself is docuemnted this way:
+you can see the
+[[http://abstract-open-solutions.github.com/code-illuminated/|full documentation online]]
+and take a look at
+[[https://github.com/abstract-open-solutions/code-illuminated/blob/master/docs.js|its source]].
 
 == Advanced topics ==
+
+=== Inter-documentation links ===
+
+Within the documentation,
+it is possible to add links to various headers within the same file
+or other files.
+
+For example,
+if in our example above we wanted to link to the {{{Foo.bar()}}} function
+from within {{{foo.js}}},
+we could add a link as follows:
+
+{{{
+   // See [[#foo.js@Foo.bar(eggs)|Foo.bar(eggs)]] for more details.
+}}}
+
+The link is a standard //Creole// link,
+but the target is peculiar and is writted in the format:
+
+{{{
+#<target_file.js>@<title_of_header>
+}}}
+
+Where {{{<target_file.js>}}} is the //Javascript// file
+where the heading we want to link to is located,
+and {{{<title_of_header>}}} is the **exact text** that is found in the heading.
+
+**Note**: the linking works only for headings,
+not for **bold** or //italics// elements.
+
+=== Interwiki links ===
+
+//Interwiki links// are a feature of //Creole//.
+
+They are expressed as {{{[[WikiName:WikiPage]]}}}:
+{{{WikiName}}} is looked up in the list of configured wikis
+and a URL is obtained
+(therefore a mapping between wiki names and base URLs exists),
+to which {{{WikiPage}}} is appended.
+
+//Code Illuminated// comes with a set of predefined wikis:
+
+|=Wiki name         |=Associated URL                                       |
+|{{{WikiCreole}}}   |http://www.wikicreole.org/wiki/                       |
+|{{{Wikipedia}}}    |http://en.wikipedia.org/wiki/                         |
+|{{{MDNJavascript}}}|https://developer.mozilla.org/en/JavaScript/Reference/|
+|{{{MDNCSS}}}       |https://developer.mozilla.org/en-US/docs/CSS/         |
+|{{{MDN}}}          |https://developer.mozilla.org/en/                     |
+
+It is however possible to add further wikis
+by adding a //Javascript// inline block at the end of {{{index.html}}}
+and doing:
+
+{{{
+<script type="text/javascript">
+window.code_illuminated.CREOLE.interwiki['MyWiki'] = 'http://example.com/';
+</script>
+}}}
 
 == Contributors ==
 
