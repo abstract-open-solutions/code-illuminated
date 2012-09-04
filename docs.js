@@ -42,11 +42,16 @@
     //
     // This is the application that processes the code and lets the user
     // navigate through and read the documentation.
+    //
+    // It lives in {{{window.code_illuminated}}} where it can be fetched
+    // to apply customizations.
 
-    var App = {
-    };
+    if((typeof window.code_illuminated) === "undefined")
+        window.code_illuminated = {};
 
-    // ** {{{ App.trim() }}} **
+    var App = window.code_illuminated;
+
+    // == App.trim() ==
     //
     // Returns {{{str}}} without whitespace at the beginning and the end.
 
@@ -54,7 +59,7 @@
         return str.replace(/^\s+|\s+$/g,"");
     };
 
-    // ** {{{ App.processors }}} **
+    // == App.processors ==
     //
     // An array of user-defined processor functions.  They should take one
     // argument, the DOM node containing the documentation.  User-defined
@@ -64,7 +69,39 @@
 
     App.menuItems = {};   // Has a {label, urlOrCallback} dict for each keyword.
 
-    // ** {{{ App.processCode() }}} **
+    // == App.CREOLE ==
+    //
+    // The configurations bit of the creole markup,
+    // mostly used to add [[http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-LinksInternalExternalAndInterwiki|interwiki]] links.
+    //
+    // As of now, the linked interwikis are:
+    //  * {{{WikiCreole}}}, http://www.wikicreole.org/wiki/
+    //  * {{{Wikipedia}}}, http://en.wikipedia.org/wiki/
+    //  * {{{MDNJavascript}}}, https://developer.mozilla.org/en/JavaScript/Reference/
+    //  * {{{MDNCSS}}}, https://developer.mozilla.org/en-US/docs/CSS/
+    //  * {{{MDN}}}, https://developer.mozilla.org/en/
+    //
+    // Further interwikis can be added by adding the following javascript
+    // at the very bottom of the documentation index page (HTML):
+    // {{{
+    // <script type="text/javascript">
+    //    window.code_illuminated.CREOLE.interwiki['Foo'] = 'http://example.com/';
+    // </script>
+    // }}}
+
+    App.CREOLE = {
+        forIE: document.all,
+        interwiki: {
+            WikiCreole: 'http://www.wikicreole.org/wiki/',
+            Wikipedia: 'http://en.wikipedia.org/wiki/',
+            MDNCSS: 'https://developer.mozilla.org/en-US/docs/CSS/',
+            MDNJavascript: 'https://developer.mozilla.org/en/JavaScript/Reference/',
+            MDN: 'https://developer.mozilla.org/en/'
+        },
+        linkFormat: ''
+    };
+
+    // == App.processCode() ==
     //
     // Splits {{{code}}} in documented blocks and puts them in {{{div}}}.
     // The used structure for each block is:
@@ -132,17 +169,7 @@
             });
         maybeAppendBlock();
 
-        var creole = new Parse.Simple.Creole(
-            {
-                forIE: document.all,
-                interwiki: {
-                    WikiCreole: 'http://www.wikicreole.org/wiki/',
-                    Wikipedia: 'http://en.wikipedia.org/wiki/',
-                    MDNReference: 'https://developer.mozilla.org/en/JavaScript/Reference/',
-                    MDN: 'https://developer.mozilla.org/en/'
-                },
-                linkFormat: ''
-            });
+        var creole = new Parse.Simple.Creole(App.CREOLE);
 
         $.each(
             blocks,
@@ -183,10 +210,36 @@
             });
     };
 
+    // == App.currentPage ==
+    //
+    // The current displayed document.
+
     App.currentPage = null;
+
+    // == App.currentPage ==
+    //
+    // The current {{{window.location.hash}}}.
+    // If the monitoring routing detects a difference between this value
+    // and {{{window.location.hash}}},
+    // the user is navigated to the new page or element.
+
     App.currentHash = null;
 
+    // == App.pages ==
+    //
+    // The has containing all the pages (Javascript files) for this folder.
+
     App.pages = {};
+
+    // == App.scrollTo() ==
+    //
+    // Searches the page for a title ({{{h[123456]}}} element)
+    // whose content contains {{{element}}}.
+    //
+    // If such an item is found, scrolls the page down to that element.
+    //
+    // This is used for intra-documentation links,
+    // as implemented by [[#docs.js@App.navigate()|App.navigate()]]
 
     App.scrollTo = function scrollTo(element) {
         var selected = null;
@@ -203,7 +256,7 @@
             $(document).scrollTop(0);
     };
 
-    // ** {{{ App.navigate() }}} **
+    // == App.navigate() ==
     //
     // Navigates to a different view if needed.  The appropriate view is
     // fetched from the URL hash.  If that is empty, the original page content
@@ -243,7 +296,18 @@
         App.scrollTo(element);
     };
 
+    // == App.CHARS_PER_ROW ==
+    //
+    // The number of characters per row on the code pane.
+    // Code lines that are longer than {{{App.CHARS_PER_ROW}}}
+    // are wrapped a la Emacs.
+
     App.CHARS_PER_ROW = 80;
+
+    // == App.initColumnSizes() ==
+    //
+    // Looks at the viewport and determines the width of the panes,
+    // appliying the needed CSS styles to them.
 
     App.initColumnSizes = function initSizes() {
         // Get the width of a single monospaced character of code.
@@ -273,6 +337,12 @@
         $(".documentation").css(App.docColumnCss);
         $(".code").css(App.codeColumnCss);
     };
+
+    // == Initialization code ==
+    //
+    // Loads the {{{App}}}, initializes it,
+    // sets up the location monitoring
+    // and launches navigation.
 
     $(window).ready(
         function() {
