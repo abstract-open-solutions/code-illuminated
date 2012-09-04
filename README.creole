@@ -1,6 +1,6 @@
 = Code Illuminated =
 
-*Code Illuminated* is a library that helps in documenting *Javascript* code.
+//Code Illuminated// is a library that helps in documenting //Javascript// code.
 
 It allows the developer to write documentation inside the source file,
 by placing it inside comments,
@@ -10,7 +10,7 @@ However, unlike these solutions, it does not mandate a very strict syntax,
 allowing the user to mix in narrative documentation
 with the documentation of single functions, objects or methods.
 
-*Code Illuminated* also provides a two paned visualization of the file,
+//Code Illuminated// also provides a two paned visualization of the file,
 with the documentation on the left and the code being documented
 (which has been modified to incorporate proper spacing) on the right.
 
@@ -18,9 +18,10 @@ Documentation is written using the [[http://wikicreole.org/|WikiCreole]] markup.
 
 {{screenshot.png|An example of documentation}}.
 
-This library is recommended for writing *mid-level* or *low-level* documentation
+This library is recommended for writing
+//mid-level// or //low-level// documentation
 aimed at developers:
-for *high-level* or user documentation,
+for //high-level// or user documentation,
 it is better to use other tools like [[http://sphinx.pocoo.org/|Sphinx]].
 
 == Features ==
@@ -31,13 +32,13 @@ it is better to use other tools like [[http://sphinx.pocoo.org/|Sphinx]].
  # Looks good
  # Doesn't need any compilation step
  # Makes it easy to provide documentation alongside source
- # Works gret for small bits of *Javascript*,
+ # Works gret for small bits of //Javascript//,
    or mid-sized projects where documenting the API is sufficient
 
 == Usage ==
 
-Using *Code Illuminated* is very simple.
-Let's start by taking an example *Javascript* file and add documentation
+Using //Code Illuminated// is very simple.
+Let's start by taking an example //Javascript// file and add documentation
 within line comments (those beginning with two slashes, {{{//}}}).
 
 {{{
@@ -66,7 +67,7 @@ within line comments (those beginning with two slashes, {{{//}}}).
 **Note**: line comments that are further indented than the original
 line-indented documentation block (the header) will not be parsed.
 
-After documenting our *Javascript* file, we create an index *HTML* file:
+After documenting our //Javascript// file, we create an index //HTML// file:
 
 {{{
 <!DOCTYPE html>
@@ -105,19 +106,19 @@ After documenting our *Javascript* file, we create an index *HTML* file:
 
 It is important that:
  # You create a {{{div id="content"}}} as root element
- # That within the *content* {{{div}}} you create a
+ # That within the //content// {{{div}}} you create a
    {{{div id="overview" class="documentation" style="display: none;"}}}
  # That you place a link to the file(s) containing documentation
    as they were anchors (e.g. {{{href="#foo.js"}}})
 
-And that we include following *CSS* at the top:
+And that we include following //CSS// at the top:
 
  * {{{google-code-prettify/prettify.css}}}
    (which is the standard
-   [[http://code.google.com/p/google-code-prettify/|Google prettify]] *CSS*)
+   [[http://code.google.com/p/google-code-prettify/|Google prettify]] //CSS//)
  * {{{docs.css}}}
 
-And these *Javascripts* at the bottom:
+And these //Javascripts// at the bottom:
 
  * {{{jquery-1.7.2.js}}} (could be any [[http://jquery.org|jQuery]]
  from 1.4 onwards)
@@ -127,8 +128,9 @@ And these *Javascripts* at the bottom:
  * {{{wikicreole.js}}}
  * {{{docs.js}}}
 
-We now only have to serve {{{index.html}}} via *HTTP*
+We now only have to serve {{{index.html}}} via //HTTP//
 and visit it with our browser.
+
 
 == Advanced topics ==
 
