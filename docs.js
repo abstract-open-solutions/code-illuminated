@@ -169,7 +169,7 @@
             });
         maybeAppendBlock();
 
-        var creole = new Parse.Simple.Creole(App.CREOLE);
+        var creole = new WikiCreole.Creole(App.CREOLE);
 
         $.each(
             blocks,
